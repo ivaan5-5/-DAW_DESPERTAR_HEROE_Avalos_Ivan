@@ -53,7 +53,35 @@ public class ElDespertarDelHeroe
 
         return opcion; 
     }
-           
-        
-    
+
+    // PIEZA 5: Método principal que coordina todo el juego
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+        boolean salir = false;
+
+        do {
+            mostrarMenuPrincipal(); 
+            opcion = leerEnteroValido(sc, "Selecciona una opción (1-4): ", 1, 4); 
+
+            
+            switch (opcion) {
+                case 1:
+                    System.out.println("\n[Próximamente: Iniciando partida...]");
+                    break;
+                case 2:
+                    System.out.println("\n[Próximamente: Mostrando ranking de Padawans...]");
+                    break;
+                case 3:
+                    mostrarAyuda(); 
+                    break;
+                case 4:
+                    System.out.println("\nQue la Fuerza te acompañe. ¡Hasta pronto!");
+                    salir = true; 
+                    break;
+            }
+        } while (!salir);
+
+        sc.close(); 
+    }
 }
