@@ -1,4 +1,6 @@
-public class ElDespertarDelHeroe
+import java.util.Scanner;
+
+public class ElDespertarDelHeroe 
 {
     static final int Vida_Inicial = 100;
     static final int Inicio_de_Bactas = 3;
