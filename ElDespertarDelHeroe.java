@@ -54,7 +54,7 @@ public class ElDespertarDelHeroe
         return opcion; 
     }
 
-    // PIEZA 5: Método principal que coordina todo el juego
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int opcion;
