@@ -35,11 +35,13 @@ public class ElDespertarDelHeroe
         int opcion = -1;
         boolean valido = false;
 
-        while (!valido) {
+        while (!valido) 
+            {
             System.out.print(mensaje);
 
             
-            if (sc.hasNextInt()) {
+            if (sc.hasNextInt()) 
+                {
                 opcion = sc.nextInt();
                 sc.nextLine(); 
 
