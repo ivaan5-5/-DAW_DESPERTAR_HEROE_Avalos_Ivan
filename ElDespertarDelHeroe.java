@@ -23,7 +23,7 @@ public class ElDespertarDelHeroe
         System.out.println("\n-------------------------------------------");
         System.out.println("          MECÁNICAS DEL JUEGO");
         System.out.println("-------------------------------------------");
-        System.out.println("- Ábrete paso por 4 estancias hasta vencer al Sith.");
+        System.out.println("- Ábrete paso por 4 rivales hasta vencer al Sith.");
         System.out.println("- Elige entre 3 armas (Sable, Bláster o Pica).");
         System.out.println("- Gestiona tus viales de Bacta y la Fuerza.");
         System.out.println("- Cuidado con los cofres mímico y las trampas.");
@@ -50,7 +50,7 @@ public class ElDespertarDelHeroe
                 }
             } else {
             
-                System.out.println("Entrada inválida. Debe ser un número entero.");
+                System.out.println("Debes seleccionar un numero entero");
                 sc.nextLine();
             }
         }
@@ -69,9 +69,13 @@ public class ElDespertarDelHeroe
             opcion = leerEnteroValido(sc, "Selecciona una opción (1-4): ", 1, 4); 
 
             
-            switch (opcion) {
+        
+            switch (opcion) 
+            {
                 case 1:
-                    System.out.println("\n[Próximamente: Iniciando partida...]");
+                    String nombreJugador = pedirNombrePersonaje(sc);
+                    int armaElegida = elegirArma(sc);
+                    System.out.println(" ¡Que la Fuerza te acompañe, " + nombreJugador + "!");
                     break;
                 case 2:
                     System.out.println("\n[Próximamente: Mostrando ranking de Padawans...]");
@@ -88,4 +92,34 @@ public class ElDespertarDelHeroe
 
         sc.close(); 
     }
+
+    static int elegirArma(Scanner sc) 
+    {
+        System.out.println("Selecciona tu arma inicial");
+        System.out.println("1. Sable de Luz    [Daño: 15 | Defensa: 10]");
+        System.out.println("2. Bláster Pesado  [Daño: 20 | Defensa: 5]");
+        System.out.println("3. Pica de Fuerza  [Daño: 11 | Defensa: 15]");
+
+
+        return leerEnteroValido(sc, "Elige tu arma (1-3): ", 1, 3);
+    }
+
+    
+    static String pedirNombrePersonaje(Scanner sc) 
+    {
+        String nombre = "";
+        
+        while (nombre.trim().isEmpty()) {
+            System.out.print("\nIntroduce el nombre de tu Padawan: ");
+            nombre = sc.nextLine();
+            
+            if (nombre.trim().isEmpty()) {
+                System.out.println("El nombre no puede estar vacío. Inténtalo de nuevo.");
+            }
+        }
+        
+        return nombre;
+    }
 }
+
+    
