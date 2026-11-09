@@ -2,10 +2,12 @@ import java.util.Scanner;
 
 public class ElDespertarDelHeroe 
 {
-    static final int Vida_Inicial = 100;
-    static final int Inicio_de_Bactas = 3;
-    static final int Vida_Curada_Bacta = 25;
-    static final int Inventario = 3;
+    static final int VIDA_INICIAL = 100;
+    static final int INICIO_DE_BACTAS = 3;
+    static final int VIDA_CURADA_BACTA = 25;
+    static final int INVENTARIO_CAPACIDAD = 3;
+    static final int DANYO_MIN_HEROE = 10;
+    static final int DANYO_MAX_HEROE = 20;
     static void mostrarMenuPrincipal() 
     {
         System.out.println("\n==========================================");
@@ -121,6 +123,15 @@ public class ElDespertarDelHeroe
         }
         
         return nombre;
+    }
+
+    static void mostrarEstadoPadawan(String nombre, String arma, int vida, int numBactas) {
+        System.out.println("          ESTADO DEL PADAWAN              ");
+        System.out.println(" Nombre:          " + nombre);
+        System.out.println(" Arma Equipada:   " + arma);
+        System.out.println(" Puntos de Vida:  " + vida + " / " + VIDA_INICIAL + " HP");
+        System.out.println(" Viales de Bacta: " + numBactas + " / " + INVENTARIO_CAPACIDAD);
+       
     }
 }
 
