@@ -146,7 +146,8 @@ public class ElDespertarDelHeroe {
         return nombre.trim();
     }
 
-    static void mostrarEstadoPadawan(String nombre, String arma, int vida, int numBactas) {
+    static void mostrarEstadoPadawan(String nombre, String arma, int vida, int numBactas) 
+    {
         System.out.println("          ESTADO DEL PADAWAN              ");
         System.out.println(" Nombre:          " + nombre);
         System.out.println(" Arma Equipada:   " + arma);
@@ -154,22 +155,86 @@ public class ElDespertarDelHeroe {
         System.out.println(" Viales de Bacta: " + numBactas + " / " + INVENTARIO_CAPACIDAD);
     }
 
-static boolean simularCombate(Scanner sc, String nombreHeroe, int vidaHeroe, int[] inventarioBactas, int numBactas, String nombreEnemigo, int vidaEnemigo)
- {
-    System.out.println("\n");
-    System.out.println(" ¡UNO DE LOS CAZARRECOMPENSAS DE GREEDO TE ATACA" + "!");
-    System.out.println("\n");
+static boolean simularCombate(Scanner sc, String nombreHeroe, int[] vidaHeroe, int[] inventarioBactas, int[] numBactas, String nombreEnemigo, int vidaEnemigo) 
+{
+        System.out.println("\n");
+        System.out.println(" ¡UN ENEMIGO APARECE: " + nombreEnemigo.toUpperCase() + "!");
+        System.out.println("\n");
 
-    boolean combateActivo = true;
-    boolean victoria = false;
+        boolean combateActivo = true;
+        boolean victoria = false;
 
-    if (vidaHeroe > 0 && combateActivo) 
-    {
-        victoria = true;
+        while (combateActivo && vidaHeroe[0] > 0 && vidaEnemigo > 0) 
+            {
+            System.out.println("\n--- TU TURNO ---");
+            System.out.println("Tu Vida: " + vidaHeroe[0] + " HP | Vida de " + nombreEnemigo + ": " + vidaEnemigo + " HP");
+            System.out.println("1. Atacar");
+            System.out.println("2. Usar vial de Bacta (" + numBactas[0] + " disponibles)");
+            System.out.println("3. Consultar Inventario");
+            System.out.println("4. Huir");
+
+            int accion = leerEnteroValido(sc, "Elige tu acción (1-4): ", 1, 4);
+
+            switch (accion) {
+                case 1:
+                    int danyoHeroe = (int) (Math.random() * (DANYO_MAX_HEROE - DANYO_MIN_HEROE + 1)) + DANYO_MIN_HEROE;
+                    vidaEnemigo -= danyoHeroe;
+                    System.out.println("\nAtacas a " + nombreEnemigo + " y le causas " + danyoHeroe + " de daño.");
+
+                    if (vidaEnemigo <= 0) {
+                        victoria = true;
+                        combateActivo = false;
+                        System.out.println("\n¡Has vencido a " + nombreEnemigo + "!");
+                    } else {
+                        int danyoEnemigo = (int) (Math.random() * 11) + 5;
+                        vidaHeroe[0] -= danyoEnemigo;
+                        System.out.println(nombreEnemigo + " contraataca y te quita " + danyoEnemigo + " HP.");
+                        if (vidaHeroe[0] <= 0) {
+                            vidaHeroe[0] = 0;
+                            combateActivo = false;
+                            System.out.println("\nHas caído en combate...");
+                        }
+                    }
+                    break;
+
+                case 2:
+                    if (numBactas[0] > 0) {
+                        for (int i = 0; i < INVENTARIO_CAPACIDAD; i++) {
+                            if (inventarioBactas[i] > 0) {
+                                int curacion = inventarioBactas[i];
+                                inventarioBactas[i] = 0;
+                                numBactas[0]--;
+                                
+                                vidaHeroe[0] += curacion;
+                                if (vidaHeroe[0] > VIDA_INICIAL) {
+                                    vidaHeroe[0] = VIDA_INICIAL;
+                                }
+                                System.out.println("\n-> Usas un vial de Bacta y recuperas " + curacion + " HP. Vida actual: " + vidaHeroe[0] + " HP.");
+                                break;
+                            }
+                        }
+                    } else {
+                        System.out.println("\n[!] No te quedan viales de Bacta en el inventario.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("\n--- INVENTARIO DE BACTAS ---");
+                    for (int i = 0; i < INVENTARIO_CAPACIDAD; i++) {
+                        String estadoHueco = (inventarioBactas[i] > 0) ? inventarioBactas[i] + " HP" : "Vacío";
+                        System.out.println("Ranura " + (i + 1) + ": " + estadoHueco);
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("\nHas decidido huir del combate...");
+                    combateActivo = false;
+                    break;
+            }
+        }
+
+        return victoria;
     }
-
-    return victoria;
-}
  }
     
     
