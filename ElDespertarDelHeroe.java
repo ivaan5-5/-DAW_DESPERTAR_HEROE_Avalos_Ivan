@@ -153,5 +153,23 @@ public class ElDespertarDelHeroe {
         System.out.println(" Puntos de Vida:  " + vida + " / " + VIDA_INICIAL + " HP");
         System.out.println(" Viales de Bacta: " + numBactas + " / " + INVENTARIO_CAPACIDAD);
     }
+
+static boolean simularCombate(Scanner sc, String nombreHeroe, int vidaHeroe, int[] inventarioBactas, int numBactas, String nombreEnemigo, int vidaEnemigo)
+ {
+    System.out.println("\n");
+    System.out.println(" ¡UNO DE LOS CAZARRECOMPENSAS DE GREEDO TE ATACA" + "!");
+    System.out.println("\n");
+
+    boolean combateActivo = true;
+    boolean victoria = false;
+
+    if (vidaHeroe > 0 && combateActivo) 
+    {
+        victoria = true;
+    }
+
+    return victoria;
 }
+ }
+    
     
