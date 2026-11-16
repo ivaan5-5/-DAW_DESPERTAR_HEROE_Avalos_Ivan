@@ -101,11 +101,11 @@ public class ElDespertarDelHeroe
                     System.out.println(" ¡Que la Fuerza te acompañe, " + nombreJugador + "!");
                     System.out.println(" Tu aventura comienza con un " + armaElegidaNombre + ".");
                     System.out.println("-------------------------------------------\n");
-                    if (simularCombate(sc, nombreJugador, vidaActual, inventarioBactas, numBactasDisponibles, "Cazarrecompensas de Greedo", 45)) 
+                    if (simularCombate(sc, nombreJugador,armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Cazarrecompensas de Greedo", 45)) 
                     {
-                        if (simularCombate(sc, nombreJugador, vidaActual, inventarioBactas, numBactasDisponibles, "Soldado de Asalto Imperial", 65)) 
+                        if (simularCombate(sc, nombreJugador,armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Soldado de Asalto Imperial", 65)) 
                         {
-                            if (simularCombate(sc, nombreJugador, vidaActual, inventarioBactas, numBactasDisponibles, "Inquisidor Sith", 90))
+                            if (simularCombate(sc, nombreJugador, armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Inquisidor Sith", 90))
                             {
                                 System.out.println(" ¡VICTORIA TOTAL, " + nombreJugador.toUpperCase() + "!");
                                 System.out.println(" Has completado tu entrenamiento. Entrena y podras luchar contra Darth Vader");
@@ -170,7 +170,7 @@ public class ElDespertarDelHeroe
         System.out.println(" Viales de Bacta: " + numBactas + " / " + INVENTARIO_CAPACIDAD);
     }
 
-static boolean simularCombate(Scanner sc, String nombreHeroe, int[] vidaHeroe, int[] inventarioBactas, int[] numBactas, String nombreEnemigo, int vidaEnemigo) 
+static boolean simularCombate(Scanner sc, String nombreHeroe, String armaHeroe, int[] vidaHeroe, int[] inventarioBactas, int[] numBactas, String nombreEnemigo, int vidaEnemigo) 
 {
         System.out.println("\n");
         System.out.println(" ¡UN ENEMIGO APARECE: " + nombreEnemigo.toUpperCase() + "!");
@@ -190,11 +190,25 @@ static boolean simularCombate(Scanner sc, String nombreHeroe, int[] vidaHeroe, i
 
             int accion = leerEnteroValido(sc, "Elige tu acción (1-4): ", 1, 4);
 
-            switch (accion) {
+            switch (accion) 
+            {
                 case 1:
-                    int danyoHeroe = (int) (Math.random() * (DANYO_MAX_HEROE - DANYO_MIN_HEROE + 1)) + DANYO_MIN_HEROE;
-                    vidaEnemigo -= danyoHeroe;
-                    System.out.println("\nAtacas a " + nombreEnemigo + " y le causas " + danyoHeroe + " de daño.");
+                    int probabilidadFallo = 0;
+                    if (armaHeroe.equals("Bláster Pesado")) {
+                        probabilidadFallo = 35; // 35% de fallo
+                    } else if (armaHeroe.equals("Pica de Fuerza")) {
+                        probabilidadFallo = 15; // 15% de fallo
+                    }
+
+                    int tiradaAcierto = (int) (Math.random() * 100) + 1;
+
+                    if (tiradaAcierto <= probabilidadFallo) {
+                        System.out.println("\n¡Has fallado el ataque con tu " + armaHeroe + "!");
+                    } else {
+                        int danyoHeroe = (int) (Math.random() * (DANYO_MAX_HEROE - DANYO_MIN_HEROE + 1)) + DANYO_MIN_HEROE;
+                        vidaEnemigo -= danyoHeroe;
+                        System.out.println("\nAtacas a " + nombreEnemigo + " con tu " + armaHeroe + " y le causas " + danyoHeroe + " de daño.");
+                    }
 
                     if (vidaEnemigo <= 0) {
                         victoria = true;
@@ -214,8 +228,10 @@ static boolean simularCombate(Scanner sc, String nombreHeroe, int[] vidaHeroe, i
 
                 case 2:
                     if (numBactas[0] > 0) {
-                        for (int i = 0; i < INVENTARIO_CAPACIDAD; i++) {
-                            if (inventarioBactas[i] > 0) {
+                        for (int i = 0; i < INVENTARIO_CAPACIDAD; i++) 
+                        {
+                            if (inventarioBactas[i] > 0) 
+                            {
                                 int curacion = inventarioBactas[i];
                                 inventarioBactas[i] = 0;
                                 numBactas[0]--;
@@ -224,11 +240,23 @@ static boolean simularCombate(Scanner sc, String nombreHeroe, int[] vidaHeroe, i
                                 if (vidaHeroe[0] > VIDA_INICIAL) {
                                     vidaHeroe[0] = VIDA_INICIAL;
                                 }
-                                System.out.println("\n-> Usas un vial de Bacta y recuperas " + curacion + " HP. Vida actual: " + vidaHeroe[0] + " HP.");
+                                System.out.println("\n Usas un vial de Bacta y recuperas " + curacion + " HP. Vida actual: " + vidaHeroe[0] + " HP.");
                                 break;
                             }
                         }
-                    } else {
+                    
+                    int danyoEnemigo = (int) (Math.random() * 11) + 5;
+                        vidaHeroe[0] -= danyoEnemigo;
+                        System.out.println(nombreEnemigo + " aprovecha tu distracción y te quita " + danyoEnemigo + " HP.");
+                        if (vidaHeroe[0] <= 0) 
+                            {
+                            vidaHeroe[0] = 0;
+                            combateActivo = false;
+                            System.out.println("\n No has soportado la fuerza del lado oscuro...");
+                            }
+
+                    } else 
+                        {
                         System.out.println("\n[!] No te quedan viales de Bacta en el inventario.");
                     }
                     break;
