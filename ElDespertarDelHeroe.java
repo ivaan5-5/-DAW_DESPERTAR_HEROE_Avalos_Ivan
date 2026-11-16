@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
-public class ElDespertarDelHeroe {
+public class ElDespertarDelHeroe 
+{
 
     static final int VIDA_INICIAL = 100;
     static final int INICIO_DE_BACTAS = 3;
@@ -64,13 +65,14 @@ public class ElDespertarDelHeroe {
 
         String nombreJugador = "";
         String armaElegidaNombre = "";
-        int vidaActual = VIDA_INICIAL;
+        int[] vidaActual = {VIDA_INICIAL};
 
         int[] inventarioBactas = new int[INVENTARIO_CAPACIDAD];
-        int numBactasDisponibles = 0;
+        int[] numBactasDisponibles = {0};
         boolean personajeCreado = false;
 
-        do {
+        do 
+        {
             mostrarMenuPrincipal(); 
             opcion = leerEnteroValido(sc, "Selecciona una opción (1-4): ", 1, 4); 
 
@@ -87,24 +89,27 @@ public class ElDespertarDelHeroe {
                         armaElegidaNombre = "Pica de Fuerza";
                     }
 
-                    for (int i = 0; i < INICIO_DE_BACTAS; i++) {
+                    for (int i = 0; i < INICIO_DE_BACTAS; i++) 
+                    {
                         inventarioBactas[i] = VIDA_CURADA_BACTA;
                     }
-                    numBactasDisponibles = INICIO_DE_BACTAS;
-                    vidaActual = VIDA_INICIAL;
+                    numBactasDisponibles [0] = INICIO_DE_BACTAS;
+                    vidaActual [0 ] = VIDA_INICIAL;
                     personajeCreado = true;
 
                     System.out.println("\n-------------------------------------------");
                     System.out.println(" ¡Que la Fuerza te acompañe, " + nombreJugador + "!");
                     System.out.println(" Tu aventura comienza con un " + armaElegidaNombre + ".");
                     System.out.println("-------------------------------------------\n");
+                    simularCombate(sc, nombreJugador, vidaActual, inventarioBactas, numBactasDisponibles, "Cazarrecompensas de Greedo", 45);
                     break;
 
                 case 2:
                     if (!personajeCreado) {
                         System.out.println("\n Debes iniciar una partida");
-                    } else {
-                        mostrarEstadoPadawan(nombreJugador, armaElegidaNombre, vidaActual, numBactasDisponibles);
+                    } else 
+                    {
+                        mostrarEstadoPadawan(nombreJugador, armaElegidaNombre, vidaActual [0], numBactasDisponibles [0]);
                     }
                     break;
 
