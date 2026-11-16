@@ -101,7 +101,17 @@ public class ElDespertarDelHeroe
                     System.out.println(" ¡Que la Fuerza te acompañe, " + nombreJugador + "!");
                     System.out.println(" Tu aventura comienza con un " + armaElegidaNombre + ".");
                     System.out.println("-------------------------------------------\n");
-                    simularCombate(sc, nombreJugador, vidaActual, inventarioBactas, numBactasDisponibles, "Cazarrecompensas de Greedo", 45);
+                    if (simularCombate(sc, nombreJugador, vidaActual, inventarioBactas, numBactasDisponibles, "Cazarrecompensas de Greedo", 45)) 
+                    {
+                        if (simularCombate(sc, nombreJugador, vidaActual, inventarioBactas, numBactasDisponibles, "Soldado de Asalto Imperial", 65)) 
+                        {
+                            if (simularCombate(sc, nombreJugador, vidaActual, inventarioBactas, numBactasDisponibles, "Inquisidor Sith", 90))
+                            {
+                                System.out.println(" ¡VICTORIA TOTAL, " + nombreJugador.toUpperCase() + "!");
+                                System.out.println(" Has completado tu entrenamiento. Entrena y podras luchar contra Darth Vader");
+                            }
+                        }
+                    }
                     break;
 
                 case 2:
