@@ -96,22 +96,25 @@ public class ElDespertarDelHeroe
                     numBactasDisponibles [0] = INICIO_DE_BACTAS;
                     vidaActual [0 ] = VIDA_INICIAL;
                     personajeCreado = true;
+                    int puntuacionPartida = 0;
 
                     System.out.println("\n-------------------------------------------");
                     System.out.println(" ¡Que la Fuerza te acompañe, " + nombreJugador + "!");
                     System.out.println(" Tu aventura comienza con un " + armaElegidaNombre + ".");
                     System.out.println("-------------------------------------------\n");
-                    if (simularCombate(sc, nombreJugador,armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Cazarrecompensas de Greedo", 45)) 
+                    if (simularCombate(sc, nombreJugador,armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Cazarrecompensas de Greedo", 40)) puntuacionPartida += 100;
                     {
-                        if (simularCombate(sc, nombreJugador,armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Soldado de Asalto Imperial", 65)) 
+                        if (simularCombate(sc, nombreJugador,armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Soldado de Asalto Imperial", 60))  puntuacionPartida += 100;
                         {
-                            if (simularCombate(sc, nombreJugador, armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Inquisidor Sith", 90))
+                            if (simularCombate(sc, nombreJugador, armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Inquisidor Sith", 80))  puntuacionPartida += 100;
                             {
                                 System.out.println(" ¡VICTORIA TOTAL, " + nombreJugador.toUpperCase() + "!");
                                 System.out.println(" Has completado tu entrenamiento. Entrena y podras luchar contra Darth Vader");
                             }
                         }
                     }
+
+                    System.out.println("Puntuación final: " + puntuacionPartida + " puntos.");
                     break;
 
                 case 2:
@@ -227,7 +230,12 @@ static boolean simularCombate(Scanner sc, String nombreHeroe, String armaHeroe, 
                     break;
 
                 case 2:
-                    if (numBactas[0] > 0) {
+                    if (vidaHeroe[0] >= VIDA_INICIAL) 
+                    {
+                        System.out.println("\n[!] Ya tienes la vida al máximo (" + VIDA_INICIAL + " HP). No necesitas usar un vial de Bacta.");
+                    }
+                    else if (numBactas[0] > 0) 
+                        {
                         for (int i = 0; i < INVENTARIO_CAPACIDAD; i++) 
                         {
                             if (inventarioBactas[i] > 0) 
@@ -280,4 +288,53 @@ static boolean simularCombate(Scanner sc, String nombreHeroe, String armaHeroe, 
     }
  }
     
+ static final int RANKING_CAPACIDAD = 10;
+ static void registrarEnRanking(String[] nombres, int[] puntos, int[] numRegistros, String nuevoNombre, int nuevaPuntuacion) 
+ {
+        int total = numRegistros[0];
+
+        if (total == RANKING_CAPACIDAD && nuevaPuntuacion <= puntos[total - 1]) 
+        {
+            System.out.println("Tu puntuación no entra en el Top Jedi " + RANKING_CAPACIDAD + ".");
+            return;
+        }
+
+        int pos = 0;
+        while (pos < total && puntos[pos] >= nuevaPuntuacion) 
+        {
+            pos++;
+        }
+
+        int limiteDesplazamiento = (total < RANKING_CAPACIDAD) ? total : RANKING_CAPACIDAD - 1;
+        for (int i = limiteDesplazamiento; i > pos; i--) {
+            nombres[i] = nombres[i - 1];
+            puntos[i] = puntos[i - 1];
+        }
+
+        nombres[pos] = nuevoNombre;
+        puntos[pos] = nuevaPuntuacion;
+
+        if (total < RANKING_CAPACIDAD) 
+        {
+            numRegistros[0]++;
+        }
+
+        System.out.println("¡Has sido el jedi #" + (pos + 1) + " del Ranking!");
+    }
+
+    static void mostrarRanking(String[] nombres, int[] puntos, int numRegistros) {
+        System.out.println("\n");
+        System.out.println("      CLASIFICACIÓN JEDI (TOP 10)");
+        System.out.println("\n");
+
+        if (numRegistros == 0) 
+        {
+            System.out.println("  El ranking está vacío. ¡Sé el primero en jugar!");
+        } else {
+            for (int i = 0; i < numRegistros; i++) {
+                System.out.println("  #" + (i + 1) + " - " + nombres[i] + " : " + puntos[i] + " pts");
+            }
+        }
+        System.out.println("\n");
+    }
     
