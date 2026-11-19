@@ -15,7 +15,7 @@ public class ElDespertarDelHeroe
         System.out.println("   STAR WARS: EL DESPERTAR DEL HÉROE");
         System.out.println("==========================================");
         System.out.println("1. Nueva Partida");
-        System.out.println("2. Consultar Estado");
+        System.out.println("2. Consultar Ranking");
         System.out.println("3. Ayuda");
         System.out.println("4. Salir");
         System.out.println("==========================================");
@@ -69,7 +69,9 @@ public class ElDespertarDelHeroe
 
         int[] inventarioBactas = new int[INVENTARIO_CAPACIDAD];
         int[] numBactasDisponibles = {0};
-        boolean personajeCreado = false;
+        String[] nombresRanking = new String[RANKING_CAPACIDAD];
+        int[] puntosRanking = new int[RANKING_CAPACIDAD];
+        int[] numRegistrosRanking = {0};
 
         do 
         {
@@ -95,7 +97,6 @@ public class ElDespertarDelHeroe
                     }
                     numBactasDisponibles [0] = INICIO_DE_BACTAS;
                     vidaActual [0 ] = VIDA_INICIAL;
-                    personajeCreado = true;
                     int puntuacionPartida = 0;
 
                     System.out.println("\n-------------------------------------------");
@@ -115,15 +116,11 @@ public class ElDespertarDelHeroe
                     }
 
                     System.out.println("Puntuación final: " + puntuacionPartida + " puntos.");
+                    registrarEnRanking(nombresRanking, puntosRanking, numRegistrosRanking, nombreJugador, puntuacionPartida);
                     break;
 
                 case 2:
-                    if (!personajeCreado) {
-                        System.out.println("\n Debes iniciar una partida");
-                    } else 
-                    {
-                        mostrarEstadoPadawan(nombreJugador, armaElegidaNombre, vidaActual [0], numBactasDisponibles [0]);
-                    }
+                    mostrarRanking(nombresRanking, puntosRanking, numRegistrosRanking[0]);
                     break;
 
                 case 3:
@@ -286,7 +283,7 @@ static boolean simularCombate(Scanner sc, String nombreHeroe, String armaHeroe, 
 
         return victoria;
     }
- }
+ 
     
  static final int RANKING_CAPACIDAD = 10;
  static void registrarEnRanking(String[] nombres, int[] puntos, int[] numRegistros, String nuevoNombre, int nuevaPuntuacion) 
@@ -337,4 +334,6 @@ static boolean simularCombate(Scanner sc, String nombreHeroe, String armaHeroe, 
         }
         System.out.println("\n");
     }
+
+}
     
