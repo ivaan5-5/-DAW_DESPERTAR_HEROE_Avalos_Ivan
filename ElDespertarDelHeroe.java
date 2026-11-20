@@ -119,7 +119,7 @@ public class ElDespertarDelHeroe
                             puntuacionPartida += 100;
                             if (simularCombate(sc, nombreJugador, armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Inquisidor Sith", 80)) {
                                 puntuacionPartida += 100;
-                                puntuacionPartida += vidaActual[0]; // Bonificación por vida restante al vencer
+                                puntuacionPartida += vidaActual[0];
                                 System.out.println(" ¡VICTORIA, " + nombreJugador.toUpperCase() + "!");
                                 System.out.println(" Has completado tu entrenamiento (+ " + vidaActual[0] + " pts de bonificación por vida restante).");
                             }
@@ -347,6 +347,92 @@ static boolean simularCombate(Scanner sc, String nombreHeroe, String armaHeroe, 
             }
         }
         System.out.println("\n");
+    }
+
+    static String escaparXML(String texto) {
+        return texto.replace("&", "&amp;")
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;");
+    }
+
+    static String desescaparXML(String texto) {
+        return texto.replace("&lt;", "<")
+                    .replace("&gt;", ">")
+                    .replace("&amp;", "&");
+    }
+
+    static void cargarRankingXML(String[] nombres, int[] puntos, int[] numRegistros, boolean[] xmlValido) {
+        File archivo = new File("ranking.xml");
+        if (!archivo.exists()) {
+            return; 
+        }
+
+        String[] tempNombres = new String[RANKING_CAPACIDAD];
+        int[] tempPuntos = new int[RANKING_CAPACIDAD];
+        int[] tempRegistros = {0};
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(archivo), StandardCharsets.UTF_8))) {
+            String linea;
+            String nombreActual = null;
+            boolean hayRaiz = false;
+
+            while ((linea = br.readLine()) != null) {
+                linea = linea.trim();
+                if (linea.equals("<ranking>")) {
+                    hayRaiz = true;
+                } else if (linea.startsWith("<nombre>") && linea.endsWith("</nombre>")) {
+                    nombreActual = desescaparXML(linea.substring(8, linea.length() - 9)).trim();
+                    if (nombreActual.isEmpty()) {
+                        throw new Exception("Nombre de jugador vacío en XML.");
+                    }
+                } else if (linea.startsWith("<puntuacion>") && linea.endsWith("</puntuacion>")) {
+                    if (nombreActual == null) {
+                        throw new Exception("Puntuación sin nombre asociado.");
+                    }
+                    int pts = Integer.parseInt(linea.substring(12, linea.length() - 13).trim());
+                    if (pts < 0) {
+                        throw new Exception("Puntuación negativa no válida.");
+                    }
+                    if (tempRegistros[0] < RANKING_CAPACIDAD) {
+                        registrarEnRanking(tempNombres, tempPuntos, tempRegistros, nombreActual, pts);
+                    }
+                    nombreActual = null;
+                }
+            }
+
+            if (!hayRaiz || nombreActual != null) {
+                throw new Exception("Estructura XML incompleta o mal formada.");
+            }
+
+            for (int i = 0; i < tempRegistros[0]; i++) {
+                nombres[i] = tempNombres[i];
+                puntos[i] = tempPuntos[i];
+            }
+            numRegistros[0] = tempRegistros[0];
+
+        } catch (Exception e) {
+            xmlValido[0] = false;
+            System.out.println("\n[AVISO] Error al leer ranking.xml (" + e.getMessage() + ").");
+            System.out.println("Se conservará el archivo original sin sobrescribir hasta que se corrija.\n");
+        }
+    }
+
+    static void guardarRankingXML(String[] nombres, int[] puntos, int numRegistros) {
+        try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("ranking.xml"), StandardCharsets.UTF_8))) {
+            pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            pw.println("<?xml-stylesheet type=\"text/xsl\" href=\"ranking.xsl\"?>");
+            pw.println("<!DOCTYPE ranking SYSTEM \"ranking.dtd\">");
+            pw.println("<ranking>");
+            for (int i = 0; i < numRegistros; i++) {
+                pw.println("    <jugador>");
+                pw.println("        <nombre>" + escaparXML(nombres[i]) + "</nombre>");
+                pw.println("        <puntuacion>" + puntos[i] + "</puntuacion>");
+                pw.println("    </jugador>");
+            }
+            pw.println("</ranking>");
+        } catch (Exception e) {
+            System.out.println("[ERROR] No se pudo guardar el ranking en ranking.xml: " + e.getMessage());
+        }
     }
 
 }
