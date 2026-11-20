@@ -7,7 +7,6 @@
             <head>
                 <meta charset="UTF-8"/>
                 <title>Ranking Jedi - El Despertar del Héroe</title>
-                <link rel="stylesheet" type="text/css" href="estilos.css"/>
             </head>
             <body>
                 <div class="contenedor">
@@ -15,7 +14,7 @@
                     <h2>Clasificación JEDI (Top 10)</h2>
                     <p class="fecha">Generado desde ranking.xml</p>
 
-                    <table>
+                    <table border="1" cellpadding="8" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Posición</th>
