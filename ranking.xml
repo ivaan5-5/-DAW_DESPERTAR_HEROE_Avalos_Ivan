@@ -14,4 +14,12 @@
         <nombre>Leia Organa</nombre>
         <puntuacion>1350</puntuacion>
     </jugador>
+    <jugador>
+        <nombre>Obi-Wan Kenobi</nombre>
+        <puntuacion>1350</puntuacion>
+    </jugador>
+    <jugador>
+        <nombre>Ahsoka Tano</nombre>
+        <puntuacion>950</puntuacion>
+    </jugador>
 </ranking>
