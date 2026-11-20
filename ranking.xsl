@@ -7,7 +7,7 @@
             <head>
                 <meta charset="UTF-8"/>
                 <title>Ranking Galáctico - El Despertar del Héroe</title>
-                <link rel="stylesheet" type="text/css" href="estilos.css"/>
+                <link rel="stylesheet" type="text/css" href="estilo.css"/>
             </head>
             <body>
                 <h1>STAR WARS: EL DESPERTAR DEL HÉROE</h1>
