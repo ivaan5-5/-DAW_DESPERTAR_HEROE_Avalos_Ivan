@@ -1,0 +1,47 @@
+body 
+{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f6f9;
+    color: #222222;
+    margin: 40px;
+}
+
+h1, h2 
+{
+    text-align: center;
+    color: #1a2530;
+}
+
+table 
+{
+    width: 60%;
+    margin: 25px auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+th, td 
+{
+    border: 1px solid #cccccc;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+th 
+{
+    background-color: #1a2530;
+    color: #ffffff;
+}
+
+tr:nth-child(even) 
+{
+    background-color: #eef2f7;
+}
+
+.vacio
+{
+    text-align: center;
+    font-weight: bold;
+    color: #888888;
+    margin-top: 20px;
+}
