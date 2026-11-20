@@ -1,4 +1,12 @@
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 public class ElDespertarDelHeroe 
 {
@@ -72,6 +80,8 @@ public class ElDespertarDelHeroe
         String[] nombresRanking = new String[RANKING_CAPACIDAD];
         int[] puntosRanking = new int[RANKING_CAPACIDAD];
         int[] numRegistrosRanking = {0};
+        boolean[] xmlValidoParaGuardar = {true};
+        cargarRankingXML(nombresRanking, puntosRanking, numRegistrosRanking, xmlValidoParaGuardar);
 
         do 
         {
