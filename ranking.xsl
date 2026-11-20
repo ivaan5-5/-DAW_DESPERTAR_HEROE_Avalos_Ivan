@@ -6,34 +6,39 @@
         <html lang="es">
             <head>
                 <meta charset="UTF-8"/>
-                <title>Ranking Jedi - El Despertar del Héroe</title>
+                <title>Ranking Galáctico - El Despertar del Héroe</title>
+                <link rel="stylesheet" type="text/css" href="estilos.css"/>
             </head>
             <body>
-                <div class="contenedor">
-                    <h1>STAR WARS: EL DESPERTAR DEL HÉROE</h1>
-                    <h2>Clasificación JEDI (Top 10)</h2>
-                    <p class="fecha">Generado desde ranking.xml</p>
+                <h1>STAR WARS: EL DESPERTAR DEL HÉROE</h1>
+                <h2>Clasificación JEDI (Top 10)</h2>
 
-                    <table border="1" cellpadding="8" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Posición</th>
-                                <th>Jugador</th>
-                                <th>Puntuación</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <xsl:for-each select="ranking/jugador">
-                                <xsl:sort select="puntuacion" data-type="number" order="descending"/>
+                <xsl:choose>
+                    <xsl:when test="count(ranking/jugador) = 0">
+                        <p class="vacio">No hay registros en el ranking actualmente.</p>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td>#<xsl:value-of select="position()"/></td>
-                                    <td><xsl:value-of select="nombre"/></td>
-                                    <td><xsl:value-of select="puntuacion"/> pts</td>
+                                    <th>Posición</th>
+                                    <th>Jugador</th>
+                                    <th>Puntuación</th>
                                 </tr>
-                            </xsl:for-each>
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                <xsl:for-each select="ranking/jugador">
+                                    <xsl:sort select="puntuacion" data-type="number" order="descending"/>
+                                    <tr>
+                                        <td>#<xsl:value-of select="position()"/></td>
+                                        <td><xsl:value-of select="nombre"/></td>
+                                        <td><xsl:value-of select="puntuacion"/> pts</td>
+                                    </tr>
+                                </xsl:for-each>
+                            </tbody>
+                        </table>
+                    </xsl:otherwise>
+                </xsl:choose>
             </body>
         </html>
     </xsl:template>
