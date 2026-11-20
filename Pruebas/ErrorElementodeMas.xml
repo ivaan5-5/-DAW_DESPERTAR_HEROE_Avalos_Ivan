@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ranking SYSTEM "../ranking.dtd">
+<ranking>
+    <jugador>
+        <nombre>Luke Skywalker</nombre>
+        <puntuacion>1500</puntuacion>
+        <nivel>Maestro Jedi</nivel>
+    </jugador>
+</ranking>

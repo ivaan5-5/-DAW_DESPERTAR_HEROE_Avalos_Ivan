@@ -1,0 +1,33 @@
+CONSULTAS XPATH - RANKING EL DESPERTAR DEL HÉROE
+Archivo de prueba base: ranking.xml (5 registros: Luke Skywalker 1500, Han Solo 1200, Leia Organa 1350, Obi-Wan Kenobi 1350, Ahsoka Tano 950)
+
+1. Selección de campos:
+¿Cuáles son los nombres de todos los jugadores registrados en el ranking?
+   Expresión: /ranking/jugador/nombre/text()
+   Resultado esperado: Luke Skywalker, Han Solo, Leia Organa, Obi-Wan Kenobi, Ahsoka Tano
+   Resultado obtenido: Luke Skywalker, Han Solo, Leia Organa, Obi-Wan Kenobi, Ahsoka Tano
+
+2. Filtro por puntuación:
+¿Qué personajes tienen una puntuación superior a 1300 puntos?
+   Expresión: /ranking/jugador[puntuacion > 1300]/nombre/text()
+   Resultado esperado: Luke Skywalker, Leia Organa, Obi-Wan Kenobi
+   Resultado obtenido: Luke Skywalker, Leia Organa, Obi-Wan Kenobi
+
+3. Filtro por jugador:
+¿Cuál es la puntuación exacta del jugador Han Solo?
+   Expresión: /ranking/jugador[nombre = 'Han Solo']/puntuacion/text()
+   Resultado esperado: 1200
+   Resultado obtenido: 1200
+
+4. Combinación de condiciones en un predicado:
+¿Qué personajes tienen 1200 puntos o más y no se llaman Han Solo?
+   Expresión: /ranking/jugador[puntuacion >= 1200 and nombre != 'Han Solo']/nombre/text()
+   Resultado esperado: Luke Skywalker, Leia Organa, Obi-Wan Kenobi
+   Resultado obtenido: Luke Skywalker, Leia Organa, Obi-Wan Kenobi
+
+5. Función de recuento y agregación:
+¿Cuántos jugadores están empatados a 1350 puntos y cuál es eñ total de puntos del ranking?
+   Expresión (recuento): count(/ranking/jugador[puntuacion = 1350])
+   Resultado esperado / obtenido: 2
+   Expresión (agregación): sum(/ranking/jugador/puntuacion)
+   Resultado esperado / obtenido: 6350
