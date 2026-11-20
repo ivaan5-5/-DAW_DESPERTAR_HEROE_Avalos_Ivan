@@ -113,20 +113,24 @@ public class ElDespertarDelHeroe
                     System.out.println(" ¡Que la Fuerza te acompañe, " + nombreJugador + "!");
                     System.out.println(" Tu aventura comienza con un " + armaElegidaNombre + ".");
                     System.out.println("-------------------------------------------\n");
-                    if (simularCombate(sc, nombreJugador,armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Cazarrecompensas de Greedo", 40)) puntuacionPartida += 100;
-                    {
-                        if (simularCombate(sc, nombreJugador,armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Soldado de Asalto Imperial", 60))  puntuacionPartida += 100;
-                        {
-                            if (simularCombate(sc, nombreJugador, armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Inquisidor Sith", 80))  puntuacionPartida += 100;
-                            {
-                                System.out.println(" ¡VICTORIA TOTAL, " + nombreJugador.toUpperCase() + "!");
-                                System.out.println(" Has completado tu entrenamiento. Entrena y podras luchar contra Darth Vader");
+                    if (simularCombate(sc, nombreJugador, armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Cazarrecompensas de Greedo", 40)) {
+                        puntuacionPartida += 100;
+                        if (simularCombate(sc, nombreJugador, armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Soldado de Asalto Imperial", 60)) {
+                            puntuacionPartida += 100;
+                            if (simularCombate(sc, nombreJugador, armaElegidaNombre, vidaActual, inventarioBactas, numBactasDisponibles, "Inquisidor Sith", 80)) {
+                                puntuacionPartida += 100;
+                                puntuacionPartida += vidaActual[0]; // Bonificación por vida restante al vencer
+                                System.out.println(" ¡VICTORIA, " + nombreJugador.toUpperCase() + "!");
+                                System.out.println(" Has completado tu entrenamiento (+ " + vidaActual[0] + " pts de bonificación por vida restante).");
                             }
                         }
                     }
 
                     System.out.println("Puntuación final: " + puntuacionPartida + " puntos.");
                     registrarEnRanking(nombresRanking, puntosRanking, numRegistrosRanking, nombreJugador, puntuacionPartida);
+                    if (xmlValidoParaGuardar[0]) {
+                        guardarRankingXML(nombresRanking, puntosRanking, numRegistrosRanking[0]);
+                    }
                     break;
 
                 case 2:
